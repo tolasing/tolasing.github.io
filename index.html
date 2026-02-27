@@ -3,200 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tolasing | Master Builder Portfolio</title>
+    <title>tolasing — Master Builder</title>
     <style>
         :root {
-            --lego-red: #E3000B;
-            --bg-color: #ffffff;
-            --text-color: #111111;
-            --subtle-text: #666666;
-            --grid-color: #f0f0f0;
+            --bg: #f5f5f7; /* Apple/LoveFrom off-white */
+            --text: #1d1d1f;
+            --accent: #E3000B; /* Minimal LEGO Red hint */
+            --subtle: #86868b;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
-            background-size: 25px 25px; /* Blueprint grid effect */
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.1;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 850px;
-            margin: 80px auto;
-            padding: 0 30px;
+        /* Smooth reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        header {
-            margin-bottom: 100px;
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .master-builder-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--lego-red);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-weight: 800;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
+        /* Hero Section */
+        section {
+            padding: 120px 40px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            margin: 0;
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: var(--subtle-text);
-            margin-top: 10px;
-            font-weight: 400;
-        }
-
-        .bio {
-            font-size: 1.2rem;
-            margin-top: 30px;
-            max-width: 650px;
-        }
-
-        .project-section {
-            margin-top: 100px;
-        }
-
-        .section-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--subtle-text);
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 9rem);
+            font-weight: 600;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
             margin-bottom: 40px;
         }
 
-        .project-card {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            margin-bottom: 60px;
-            transition: transform 0.2s ease;
-        }
-
-        .project-card:hover {
-            transform: translateX(10px);
-        }
-
-        .project-card h3 {
-            font-size: 2rem;
-            margin: 0;
+        .master-builder-tag {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--subtle);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .project-card p {
-            font-size: 1.1rem;
-            color: var(--subtle-text);
-            margin: 10px 0 20px 0;
+        /* Project Display - The "Exhibit" */
+        .project-block {
+            border-top: 1px solid #d2d2d7;
+            padding-top: 80px;
+            margin-top: 100px;
         }
 
-        .tech-pill-container {
+        .project-header {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
         }
 
-        .tech-pill {
-            font-family: "SF Mono", monospace;
-            font-size: 0.8rem;
-            background: #f4f4f4;
-            padding: 4px 10px;
-            border-radius: 4px;
-            color: #444;
+        .project-name {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 500;
+            letter-spacing: -0.03em;
+        }
+
+        .project-desc {
+            font-size: 1.5rem;
+            max-width: 600px;
+            color: var(--subtle);
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        /* Visual Canvas */
+        .canvas {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #e8e8ed; /* Industrial Aluminum color */
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            color: #aeaeae;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #d2d2d7;
+        }
+
+        .canvas::after {
+            content: "MODEL_V.02 / 🪛 🔧";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .spec-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--subtle);
+            margin-bottom: 10px;
+        }
+
+        .spec-value {
+            font-size: 1.1rem;
+            font-weight: 400;
         }
 
         footer {
-            margin-top: 150px;
-            padding-bottom: 50px;
-            border-top: 1px solid #eee;
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--subtle-text);
+            padding: 100px 40px;
+            text-align: center;
             font-size: 0.9rem;
+            color: var(--subtle);
         }
 
-        .contact-links a {
-            color: var(--lego-red);
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 20px;
-        }
+        a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+        a:hover { opacity: 0.6; }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            .project-card h3 { font-size: 1.5rem; }
-        }
+        .lego-red { color: var(--accent); font-weight: 800; }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="master-builder-badge">🧱 Master Builder</div>
-            <h1>tolasing</h1>
-            <p class="subtitle">Robotics Alchemist & AMR Architect</p>
-            <p class="bio">
-                Building intelligent machines that bridge the gap between digital reasoning and physical execution. 
-                I snap together complex systems using <b>ROS 2</b>, <b>LLMs</b>, and a bit of mechanical magic. 🪛 🔧
-            </p>
-        </header>
+    <section class="reveal">
+        <div class="master-builder-tag">
+            <span class="lego-red">🧱</span> Master Builder Profile / 2026
+        </div>
+        <h1 class="hero-title">tolasing</h1>
+        <p class="project-desc">Building autonomous systems that bridge the gap between human intent and physical movement. Engineering with the precision of a master builder.</p>
+    </section>
 
-        <section class="project-section">
-            <h2 class="section-title">Current Builds</h2>
-
-            <a href="https://github.com/tolasing/Titan" class="project-card">
-                <h3>TITAN 🤖📦</h3>
-                <p>Industrial warehouse AMR featuring ChatGPT-driven task orchestration and Nav2 autonomous navigation.</p>
-                <div class="tech-pill-container">
-                    <span class="tech-pill">ROS 2 Humble</span>
-                    <span class="tech-pill">OpenAI GPT-4o</span>
-                    <span class="tech-pill">LiDAR SLAM</span>
-                    <span class="tech-pill">Python</span>
-                </div>
-            </a>
-
-            <a href="https://github.com/tolasing/R.O.S.I.E." class="project-card">
-                <h3>R.O.S.I.E. 🛡️</h3>
-                <p>Security robot integrated with a cognitive LLM layer for intelligent engagement and threat assessment.</p>
-                <div class="tech-pill-container">
-                    <span class="tech-pill">OpenCV</span>
-                    <span class="tech-pill">Behavior Trees</span>
-                    <span class="tech-pill">Voice Synthesis</span>
-                    <span class="tech-pill">ChatGPT API</span>
-                </div>
-            </a>
-        </section>
-
-        <footer>
-            <div>© 2026 Build with 🧱 and 🔩</div>
-            <div class="contact-links">
-                <a href="https://linkedin.com/in/tolasingganesh">LinkedIn</a>
-                <a href="mailto:tolasingganesh@gmail.com">Email</a>
-                <a href="https://github.com/tolasing">GitHub</a>
+    <section class="project-block reveal">
+        <div class="project-header">
+            <h2 class="project-name">TITAN</h2>
+            <div class="spec-value">/ AMR</div>
+        </div>
+        <div class="canvas">
+            [ 01 — TRANSPORT INTELLIGENCE ]
+        </div>
+        <p class="project-desc">A logistical engine built on ROS 2 and GPT-4o. Redefining how hardware interprets natural language in warehouse environments.</p>
+        
+        <div class="specs-grid">
+            <div class="spec-box">
+                <p class="spec-label">Control Middleware</p>
+                <p class="spec-value">ROS 2 Humble</p>
             </div>
-        </footer>
-    </div>
+            <div class="spec-box">
+                <p class="spec-label">Cognitive Layer</p>
+                <p class="spec-value">ChatGPT API</p>
+            </div>
+            <div class="spec-box">
+                <p class="spec-label">Navigation</p>
+                <p class="spec-value">Nav2 / LiDAR SLAM</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-block reveal">
+        <div class="project-header">
+            <h2 class="project-name">R.O.S.I.E.</h2>
+            <div class="spec-value">/ Security</div>
+        </div>
+        <div class="canvas">
+            [ 02 — COGNITIVE ENGAGEMENT ]
+        </div>
+        <p class="project-desc">A prototype security exoskeleton framework. Autonomous surveillance merged with an LLM-driven personality layer.</p>
+        
+        <div class="specs-grid">
+            <div class="spec-box">
+                <p class="spec-label">Vision</p>
+                <p class="spec-value">OpenCV / YOLO</p>
+            </div>
+            <div class="spec-box">
+                <p class="spec-label">Interaction</p>
+                <p class="spec-value">Voice Synthesis / LLM</p>
+            </div>
+            <div class="spec-box">
+                <p class="spec-label">Logic</p>
+                <p class="spec-value">Behavior Trees</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>🪛 Designed and Assembled by tolasing</p>
+        <div style="margin-top: 20px;">
+            <a href="https://linkedin.com/in/tolasingganesh">LinkedIn</a> &nbsp; / &nbsp; 
+            <a href="https://github.com/tolasing">GitHub</a> &nbsp; / &nbsp; 
+            <a href="mailto:tolasingganesh@gmail.com">Email</a>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll reveal observer
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 
 </body>
 </html>
