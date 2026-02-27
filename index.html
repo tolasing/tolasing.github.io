@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tolasing | Master Builder Portfolio</title>
+    <style>
+        :root {
+            --lego-red: #E3000B;
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --subtle-text: #666666;
+            --grid-color: #f0f0f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: 25px 25px; /* Blueprint grid effect */
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 80px auto;
+            padding: 0 30px;
+        }
+
+        header {
+            margin-bottom: 100px;
+        }
+
+        .master-builder-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--lego-red);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--subtle-text);
+            margin-top: 10px;
+            font-weight: 400;
+        }
+
+        .bio {
+            font-size: 1.2rem;
+            margin-top: 30px;
+            max-width: 650px;
+        }
+
+        .project-section {
+            margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--subtle-text);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 60px;
+            transition: transform 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateX(10px);
+        }
+
+        .project-card h3 {
+            font-size: 2rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .project-card p {
+            font-size: 1.1rem;
+            color: var(--subtle-text);
+            margin: 10px 0 20px 0;
+        }
+
+        .tech-pill-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tech-pill {
+            font-family: "SF Mono", monospace;
+            font-size: 0.8rem;
+            background: #f4f4f4;
+            padding: 4px 10px;
+            border-radius: 4px;
+            color: #444;
+        }
+
+        footer {
+            margin-top: 150px;
+            padding-bottom: 50px;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--subtle-text);
+            font-size: 0.9rem;
+        }
+
+        .contact-links a {
+            color: var(--lego-red);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .project-card h3 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="master-builder-badge">🧱 Master Builder</div>
+            <h1>tolasing</h1>
+            <p class="subtitle">Robotics Alchemist & AMR Architect</p>
+            <p class="bio">
+                Building intelligent machines that bridge the gap between digital reasoning and physical execution. 
+                I snap together complex systems using <b>ROS 2</b>, <b>LLMs</b>, and a bit of mechanical magic. 🪛 🔧
+            </p>
+        </header>
+
+        <section class="project-section">
+            <h2 class="section-title">Current Builds</h2>
+
+            <a href="https://github.com/tolasing/Titan" class="project-card">
+                <h3>TITAN 🤖📦</h3>
+                <p>Industrial warehouse AMR featuring ChatGPT-driven task orchestration and Nav2 autonomous navigation.</p>
+                <div class="tech-pill-container">
+                    <span class="tech-pill">ROS 2 Humble</span>
+                    <span class="tech-pill">OpenAI GPT-4o</span>
+                    <span class="tech-pill">LiDAR SLAM</span>
+                    <span class="tech-pill">Python</span>
+                </div>
+            </a>
+
+            <a href="https://github.com/tolasing/R.O.S.I.E." class="project-card">
+                <h3>R.O.S.I.E. 🛡️</h3>
+                <p>Security robot integrated with a cognitive LLM layer for intelligent engagement and threat assessment.</p>
+                <div class="tech-pill-container">
+                    <span class="tech-pill">OpenCV</span>
+                    <span class="tech-pill">Behavior Trees</span>
+                    <span class="tech-pill">Voice Synthesis</span>
+                    <span class="tech-pill">ChatGPT API</span>
+                </div>
+            </a>
+        </section>
+
+        <footer>
+            <div>© 2026 Build with 🧱 and 🔩</div>
+            <div class="contact-links">
+                <a href="https://linkedin.com/in/tolasingganesh">LinkedIn</a>
+                <a href="mailto:tolasingganesh@gmail.com">Email</a>
+                <a href="https://github.com/tolasing">GitHub</a>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
