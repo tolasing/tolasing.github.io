@@ -6,10 +6,10 @@
     <title>tolasing — Master Builder</title>
     <style>
         :root {
-            --bg: #f5f5f7; /* Apple/LoveFrom off-white */
-            --text: #1d1d1f;
-            --accent: #E3000B; /* Minimal LEGO Red hint */
+            --bg: #ffffff;
+            --text: #000000;
             --subtle: #86868b;
+            --accent: #E3000B;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,219 +23,184 @@
             overflow-x: hidden;
         }
 
-        /* Smooth reveal animation */
+        /* Cinematic Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+            transform: translateY(60px) scale(0.98);
+            transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
         }
 
-        .reveal.visible {
+        .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         /* Hero Section */
-        section {
-            padding: 120px 40px;
-            min-height: 80vh;
+        .hero {
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 0 10%;
+            position: relative;
         }
 
         .hero-title {
-            font-size: clamp(4rem, 12vw, 9rem);
+            font-size: clamp(4rem, 15vw, 12rem);
             font-weight: 600;
-            letter-spacing: -0.05em;
-            line-height: 0.9;
-            margin-bottom: 40px;
+            letter-spacing: -0.06em;
+            line-height: 0.85;
         }
 
-        .master-builder-tag {
-            font-size: 0.9rem;
+        .hero-meta {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.4em;
             color: var(--subtle);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             display: flex;
+            gap: 20px;
             align-items: center;
-            gap: 15px;
         }
 
-        /* Project Display - The "Exhibit" */
-        .project-block {
-            border-top: 1px solid #d2d2d7;
-            padding-top: 80px;
-            margin-top: 100px;
+        /* Project Block Styling */
+        .project-section {
+            padding: 15vh 10%;
+            border-top: 1px solid #f0f0f0;
         }
 
         .project-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
-        .project-name {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 500;
-            letter-spacing: -0.03em;
-        }
-
-        .project-desc {
-            font-size: 1.5rem;
-            max-width: 600px;
-            color: var(--subtle);
-            margin-bottom: 40px;
-            line-height: 1.4;
-        }
-
-        /* Visual Canvas */
-        .canvas {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #e8e8ed; /* Industrial Aluminum color */
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .project-number {
             font-family: monospace;
-            color: #aeaeae;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #d2d2d7;
-        }
-
-        .canvas::after {
-            content: "MODEL_V.02 / 🪛 🔧";
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .spec-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--subtle);
-            margin-bottom: 10px;
-        }
-
-        .spec-value {
-            font-size: 1.1rem;
-            font-weight: 400;
-        }
-
-        footer {
-            padding: 100px 40px;
-            text-align: center;
             font-size: 0.9rem;
             color: var(--subtle);
         }
 
-        a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
-        a:hover { opacity: 0.6; }
+        .project-name {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 500;
+            letter-spacing: -0.04em;
+        }
 
-        .lego-red { color: var(--accent); font-weight: 800; }
+        /* Cinematic Image/Canvas Placeholder */
+        .visual-frame {
+            width: 100%;
+            height: 70vh;
+            background: #fbfbfd;
+            border: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .visual-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-section:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .project-description {
+            font-size: 1.6rem;
+            max-width: 700px;
+            line-height: 1.4;
+            color: var(--subtle);
+            margin-bottom: 50px;
+        }
+
+        /* Industrial Specs Layout */
+        .specs-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+
+        .spec-group p:first-child {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--subtle);
+            margin-bottom: 15px;
+        }
+
+        .spec-group p:last-child {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        footer {
+            padding: 100px 10%;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 40px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+            transition: opacity 0.4s;
+        }
+
+        .footer-links a:hover { opacity: 1; }
 
     </style>
 </head>
 <body>
 
-    <section class="reveal">
-        <div class="master-builder-tag">
-            <span class="lego-red">🧱</span> Master Builder Profile / 2026
+    <section class="hero reveal">
+        <div class="hero-meta">
+            <span>Master Builder Profile</span>
+            <span>🪛 🔧</span>
         </div>
         <h1 class="hero-title">tolasing</h1>
-        <p class="project-desc">Building autonomous systems that bridge the gap between human intent and physical movement. Engineering with the precision of a master builder.</p>
     </section>
 
-    <section class="project-block reveal">
+    <section class="project-section reveal">
         <div class="project-header">
             <h2 class="project-name">TITAN</h2>
-            <div class="spec-value">/ AMR</div>
+            <span class="project-number">MOD / 01</span>
         </div>
-        <div class="canvas">
-            [ 01 — TRANSPORT INTELLIGENCE ]
+        <div class="visual-frame">
+            <div style="font-family: monospace; color: #ccc;">[ TITAN_ASSEMBLY_VIEW ]</div>
         </div>
-        <p class="project-desc">A logistical engine built on ROS 2 and GPT-4o. Redefining how hardware interprets natural language in warehouse environments.</p>
-        
-        <div class="specs-grid">
-            <div class="spec-box">
-                <p class="spec-label">Control Middleware</p>
-                <p class="spec-value">ROS 2 Humble</p>
+        <p class="project-description">
+            Industrial warehouse AMR bridging the gap between natural language intent and autonomous execution via ROS 2 and GPT-4o.
+        </p>
+        <div class="specs-table">
+            <div class="spec-group">
+                <p>Framework</p>
+                <p>ROS 2 Humble / Nav2</p>
             </div>
-            <div class="spec-box">
-                <p class="spec-label">Cognitive Layer</p>
-                <p class="spec-value">ChatGPT API</p>
+            <div class="spec-group">
+                <p>Cognitive Layer</p>
+                <p>OpenAI ChatGPT API</p>
             </div>
-            <div class="spec-box">
-                <p class="spec-label">Navigation</p>
-                <p class="spec-value">Nav2 / LiDAR SLAM</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="project-block reveal">
-        <div class="project-header">
-            <h2 class="project-name">R.O.S.I.E.</h2>
-            <div class="spec-value">/ Security</div>
-        </div>
-        <div class="canvas">
-            [ 02 — COGNITIVE ENGAGEMENT ]
-        </div>
-        <p class="project-desc">A prototype security exoskeleton framework. Autonomous surveillance merged with an LLM-driven personality layer.</p>
-        
-        <div class="specs-grid">
-            <div class="spec-box">
-                <p class="spec-label">Vision</p>
-                <p class="spec-value">OpenCV / YOLO</p>
-            </div>
-            <div class="spec-box">
-                <p class="spec-label">Interaction</p>
-                <p class="spec-value">Voice Synthesis / LLM</p>
-            </div>
-            <div class="spec-box">
-                <p class="spec-label">Logic</p>
-                <p class="spec-value">Behavior Trees</p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>🪛 Designed and Assembled by tolasing</p>
-        <div style="margin-top: 20px;">
-            <a href="https://linkedin.com/in/tolasingganesh">LinkedIn</a> &nbsp; / &nbsp; 
-            <a href="https://github.com/tolasing">GitHub</a> &nbsp; / &nbsp; 
-            <a href="mailto:tolasingganesh@gmail.com">Email</a>
-        </div>
-    </footer>
-
-    <script>
-        // Simple scroll reveal observer
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
-
-</body>
-</html>
+            <div class="spec-group">
+                <p>Application</p>
+                <p
