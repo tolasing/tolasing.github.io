@@ -3,179 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tolasing — Masterxgsdr Builder</title>
+    <title>tolasing — Master Builder</title>
     <style>
         :root {
             --bg: #ffffff;
             --text: #000000;
-            --subtle: #86868b;
+            --subtle: #8e8e93;
+            /* The "Damped Spring" curve: Fast start, very slow finish */
+            --cinematic-ease: cubic-bezier(0.2, 1, 0.2, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            line-height: 1.1;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* THE FIX: Elements are hidden by default with a 'deep' starting position */
+        /* --- THE CINEMATIC ENGINE --- */
         .reveal {
             opacity: 0;
-            transform: translateY(100px);
-            transition: opacity 1.8s cubic-bezier(0.19, 1, 0.22, 1), 
-                        transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateY(80px);
+            letter-spacing: 0.1em; /* Start slightly spaced out */
+            transition: 
+                opacity 2.5s var(--cinematic-ease), 
+                transform 2.5s var(--cinematic-ease),
+                letter-spacing 2s var(--cinematic-ease);
             will-change: transform, opacity;
         }
 
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
+            letter-spacing: -0.02em; /* Tighten up on arrival */
         }
 
-        section {
-            padding: 15vh 10%;
-            min-height: 100vh;
+        /* Hero Section */
+        header {
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-
-        .hero-title {
-            font-size: clamp(4rem, 15vw, 12rem);
-            font-weight: 600;
-            letter-spacing: -0.06em;
-            margin-top: 20px;
+            padding: 0 8%;
         }
 
         .meta {
-            font-size: 0.8rem;
+            font-family: monospace;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.4em;
+            letter-spacing: 0.3em;
             color: var(--subtle);
+            margin-bottom: 20px;
         }
 
-        .project-row {
-            border-top: 1px solid #e5e5e5;
-            padding-top: 60px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 100px;
-            align-items: start;
+        h1 {
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 600;
+            line-height: 0.9;
         }
 
-        .project-name {
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            font-weight: 500;
-            letter-spacing: -0.04em;
+        /* Project Exhibit */
+        section {
+            padding: 20vh 8%;
+            border-top: 1px solid #efefef;
         }
 
-        .project-desc {
-            font-size: 1.5rem;
-            line-height: 1.4;
+        .project-id {
+            font-family: monospace;
+            font-size: 0.7rem;
             color: var(--subtle);
             margin-bottom: 40px;
+            display: block;
         }
 
-        .specs {
-            font-family: "SF Mono", Menlo, monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+        .project-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            font-size: 1.4rem;
+            line-height: 1.5;
+            color: var(--subtle);
+            max-width: 600px;
+            margin-bottom: 60px;
+        }
+
+        /* Technical Specs */
+        .spec-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 40px;
         }
 
-        .spec-item {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
+        .spec-item label {
+            display: block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--subtle);
+            margin-bottom: 10px;
+        }
+
+        .spec-item span {
+            font-size: 1.1rem;
+            font-weight: 400;
         }
 
         footer {
-            padding: 100px 10%;
-            text-align: left;
+            padding: 100px 8%;
+            display: flex;
+            justify-content: space-between;
             font-size: 0.8rem;
             color: var(--subtle);
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.1em;
         }
 
-        a { text-decoration: none; color: inherit; border-bottom: 1px solid transparent; transition: 0.3s; }
-        a:hover { border-bottom: 1px solid var(--text); }
-        
-        @media (max-width: 900px) {
-            .project-row { grid-template-columns: 1fr; gap: 40px; }
-        }
+        a { text-decoration: none; color: inherit; transition: color 0.3s; }
+        a:hover { color: var(--text); }
+
+        /* Stagger logic for children of a revealed section */
+        .active .stagger-1 { transition-delay: 0.1s; }
+        .active .stagger-2 { transition-delay: 0.2s; }
+        .active .stagger-3 { transition-delay: 0.3s; }
+
     </style>
 </head>
 <body>
 
-    <section class="hero reveal">
-        <p class="meta">Master Builder / 🪛 🔧</p>
-        <h1 class="hero-title">tolasing</h1>
-    </section>
+    <header class="reveal">
+        <p class="meta stagger-1">Master Builder // 🪛 🔧</p>
+        <h1 class="stagger-2">tolasing</h1>
+    </header>
 
     <section class="reveal">
-        <div class="project-row">
-            <h2 class="project-name">TITAN</h2>
-            <div class="content">
-                <p class="project-desc">Industrial Warehouse AMR. High-level cognitive orchestration via GPT-4o merged with ROS 2 hardware execution.</p>
-                <div class="specs">
-                    <div class="spec-item"><span>Middleware</span><span>ROS 2</span></div>
-                    <div class="spec-item"><span>Logic</span><span>LLM / GPT</span></div>
-                    <div class="spec-item"><span>Navigation</span><span>Nav2</span></div>
-                    <div class="spec-item"><span>Status</span><span>Operational</span></div>
-                </div>
-            </div>
+        <span class="project-id stagger-1">MODEL // 01</span>
+        <h2 class="project-title stagger-2">TITAN</h2>
+        <p class="description stagger-3">
+            An industrial-grade AMR. Merging ROS 2 navigation protocols with high-level LLM task orchestration for fluid warehouse logistics.
+        </p>
+        <div class="spec-grid stagger-3">
+            <div class="spec-item"><label>Intelligence</label><span>GPT-4o</span></div>
+            <div class="spec-item"><label>Framework</label><span>ROS 2 Humble</span></div>
+            <div class="spec-item"><label>Locomotion</label><span>Diff-Drive</span></div>
         </div>
     </section>
 
     <section class="reveal">
-        <div class="project-row">
-            <h2 class="project-name">R.O.S.I.E.</h2>
-            <div class="content">
-                <p class="project-desc">Autonomous security framework. Real-time threat assessment using vision-based SLAM and verbal engagement layers.</p>
-                <div class="specs">
-                    <div class="spec-item"><span>Vision</span><span>OpenCV</span></div>
-                    <div class="spec-item"><span>Logic</span><span>C++ / BT</span></div>
-                    <div class="spec-item"><span>Safety</span><span>Active</span></div>
-                    <div class="spec-item"><span>Build</span><span>v0.8</span></div>
-                </div>
-            </div>
+        <span class="project-id stagger-1">MODEL // 02</span>
+        <h2 class="project-title stagger-2">R.O.S.I.E.</h2>
+        <p class="description stagger-3">
+            Security framework prototype. Utilizing vision-based SLAM and a cognitive personality layer for autonomous surveillance and verbal engagement.
+        </p>
+        <div class="spec-grid stagger-3">
+            <div class="spec-item"><label>Vision</label><span>OpenCV / YOLO</span></div>
+            <div class="spec-item"><label>Interaction</label><span>Natural Language</span></div>
+            <div class="spec-item"><label>Safety</label><span>Active Protocols</span></div>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 Assembled by tolasing</p>
-        <div style="margin-top: 30px;">
-            <a href="https://github.com/tolasing">GitHub</a> &nbsp; / &nbsp;
+        <p>© 2026 // Assembled by tolasing 🪛 🔧</p>
+        <div>
+            <a href="https://github.com/tolasing">GitHub</a> &nbsp;&nbsp;
             <a href="https://linkedin.com/in/tolasingganesh">LinkedIn</a>
         </div>
     </footer>
 
     <script>
-        // Use a slight delay to ensure the browser has painted before starting the observer
-        window.addEventListener('load', () => {
-            const observerOptions = {
+        // High-precision Observer
+        const observeEntries = () => {
+            const options = {
                 threshold: 0.1,
-                rootMargin: "0px 0px -100px 0px" // Triggers slightly before it enters the viewport
+                rootMargin: "0px 0px -50px 0px"
             };
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
+            const callback = (entries) => {
+                entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
                     }
                 });
-            }, observerOptions);
+            };
 
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        });
+            const observer = new IntersectionObserver(callback, options);
+            document.querySelectorAll('.reveal').forEach(section => observer.observe(section));
+        };
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', observeEntries);
     </script>
 </body>
 </html>
